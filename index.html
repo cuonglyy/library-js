@@ -6,11 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Library</title>
   <link rel="stylesheet" href="style.css">
-  <style src="./main.js" defer></style>
+  <script src="./main.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Questrial&family=Roboto&display=swap" rel="stylesheet">
-  
 </head>
 <body>
   <div class="nav-bar">
@@ -18,7 +17,7 @@
   </div>
   <main>
     <div id="bookGrid">
-      <button id="addBookCard">
+      <button id="addBookBtn">
         <p class="plus-sign">+</p>
         <p>Add Book</p>
       </button>
@@ -49,7 +48,9 @@
         <input type="radio" name="book_readStatus" id="notRead" value="false">
         <label for="notRead">No</label>
       </div>
+      <button type="submit"></button>
     </form>
   </div>
+  <div class="overlay"></div>
 </body>
 </html>

@@ -9,7 +9,7 @@ class Book {
 
 class Library {
   constructor() {
-    this.library = [
+    this.books = [
       {
         'title': 'One Piece',
         'author': 'Eiichiro Oda',
@@ -42,15 +42,16 @@ class Library {
 const library = new Library();
 
 
-const addBookCard = document.querySelector("#addBookCard");
-const modal = document.querySelector('.modal');
+const addBookBtn = document.querySelector("#addBookBtn");
+const addBookModal = document.querySelector('.add-book-modal');
 const bookGrid = document.querySelector('#bookGrid');
-const body = document.querySelector('body');
+const overlay = document.querySelector('.overlay');
 
 
-const openAddBookModal = () => {
-  modal.classList.add('active');
-  body.appendChild(modal);
-}
+let openAddBookModal = (e) => {
+  console.log(e);
+  addBookModal.classList.add('active');
+  overlay.classList.add('active');
+ }
 
-addBookCard.addEventListener('click', openAddBookModal);
+addBookBtn.addEventListener('click', openAddBookModal);

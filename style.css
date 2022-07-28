@@ -40,6 +40,10 @@ button, input[type="submit"], input[type="reset"] {
 	outline: inherit;
 }
 
+button:active {
+  transform: scale(98%);
+}
+
 body {
   display: grid;
   grid-template: 100px 1fr 50px / 1fr;
@@ -71,23 +75,33 @@ main {
   gap: var(--big-gap);
 }
 
-.add-book-modal {
+.overlay {
+  display: none;
   position: fixed;
-  z-index: 1;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 30%);
 }
 
+.overlay.active {
+  display: block;
+}
+
+.add-book-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+}
+
 .add-book-modal.active {
-  
+  display: block;
 }
 
 .book-form-modal {
   display: flex;
   gap: var(--small-gap);
   flex-direction: column;
-  width: 20%;
+  width: 100%;
   height: auto;
   padding: var(--xlarge-padding);
   border: 1px solid var(--card-border-color);
@@ -102,7 +116,7 @@ main {
   flex-direction: column;
 }
 
-#addBookCard {
+#addBookBtn {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -111,7 +125,7 @@ main {
   border-radius: var(--button-border-rad);
 }
 
-#addBookCard:hover {
+#addBookBtn:hover {
   transition: 0.2s;
   background-color: var(--addcard-background-color);
 }
@@ -120,7 +134,7 @@ main {
   font-size: 125px;
 }
 
-#addBookCard > .plus-sign + p {
+#addBookBtn > .plus-sign + p {
   font-size: 20px;
   padding-bottom: var(--medium-padding);
 }
