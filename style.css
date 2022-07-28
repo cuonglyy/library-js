@@ -1,8 +1,21 @@
 :root {
+
+  /* Padding */
   --small-padding: 8px;
   --medium-padding: 16px;
   --large-padding: 24px;
   --xlarge-padding: 32px;
+
+  /* Margin */
+  --small-margin: 8px;
+  --medium-margin: 16px;
+  --large-margin: 24px;
+  --xlarge-margin: 32px;
+
+  --button-border-rad: 16px;
+  --navbar-background-color: #38bdf8;
+  --addcard-background-color: #e0f2fe;
+  --card-border-color: #d1d5db;
 }
 
 * {
@@ -11,20 +24,92 @@
   box-sizing: border-box;
 }
 
+/* Removes browsers default styling for buttons */
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
 body {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template: 100px 1fr 50px / 1fr;
   width: 100vw;
   height: 100vh;
   font-family: 'Questrial', sans-serif;
 }
 
 .nav-bar {
-  background-color: #0284c7;
-  padding: var(--xlarge-padding)
+  background-color: var(--navbar-background-color);
+  padding: var(--xlarge-padding);
+  
 }
 
 .nav-bar > p {
   font-size: 42px;
+}
+
+main {
+  padding: var(--xlarge-padding);
+  margin: 0 var(--xlarge-margin) 0 var(--xlarge-margin);
+}
+
+#bookGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  grid-template-rows: 250px;
+  grid-auto-rows: 250px;
+  gap: 32px;
+}
+
+.add-book-modal {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 30%);
+}
+
+.add-book-modal.active {
+  
+}
+
+.book-form-modal {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  height: auto;
+  padding: var(--small-padding);
+  border: 1px solid var(--card-border-color);
+}
+
+#addBookCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 2px solid var(--card-border-color);
+  border-radius: var(--button-border-rad);
+}
+
+#addBookCard:hover {
+  transition: 0.2s;
+  background-color: var(--addcard-background-color);
+}
+
+.plus-sign {
+  font-size: 125px;
+}
+
+#addBookCard > .plus-sign + p {
+  font-size: 20px;
+  padding-bottom: var(--medium-padding);
+}
+
+footer {
+  text-align: center;
 }
 

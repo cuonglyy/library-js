@@ -9,7 +9,18 @@ class Book {
 
 class Library {
   constructor() {
-    this.library = [];
+    this.library = [
+      {
+        'title': 'One Piece',
+        'author': 'Eiichiro Oda',
+        'pages': '4932943'
+      },
+      {
+        'title': 'Gintama',
+        'author': 'Hideaki Sorachi',
+        'pages': '23532'
+      }
+    ];
   }
 
   //Methods
@@ -30,3 +41,16 @@ class Library {
 
 const library = new Library();
 
+
+const addBookCard = document.querySelector("#addBookCard");
+const modal = document.querySelector('.modal');
+const bookGrid = document.querySelector('#bookGrid');
+const body = document.querySelector('body');
+
+
+const openAddBookModal = () => {
+  modal.classList.add('active');
+  body.appendChild(modal);
+}
+
+addBookCard.addEventListener('click', openAddBookModal);
