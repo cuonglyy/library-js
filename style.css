@@ -6,21 +6,28 @@
   --large-padding: 24px;
   --xlarge-padding: 32px;
 
+  --input-padding: 4px;
+
   /* Margin */
   --small-margin: 8px;
   --medium-margin: 16px;
   --large-margin: 24px;
   --xlarge-margin: 32px;
+  --xxlarge-margin: 54px;
 
   /* Gap */
   --small-gap: 16px;
+  --medium-gap: 24px;
   --big-gap: 32px;
 
   --button-border-rad: 16px;
   --card-border-rad: 14px;
+
+
   --navbar-background-color: #38bdf8;
   --addcard-background-color: #e0f2fe;
   --card-border-color: #d1d5db;
+  --button-background-color: #60a5fa;
 }
 
 * {
@@ -67,6 +74,10 @@ main {
   margin: 0 var(--xlarge-margin) 0 var(--xlarge-margin);
 }
 
+footer {
+  text-align: center;
+}
+
 #bookGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
@@ -74,6 +85,11 @@ main {
   grid-auto-rows: 250px;
   gap: var(--big-gap);
 }
+
+
+
+/* Add Book Modal */
+
 
 .overlay {
   display: none;
@@ -91,22 +107,37 @@ main {
   display: none;
   position: fixed;
   z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* 
+    This keeps causing the modal to transition from the bottom right to the center, rather than growing in the center. Not sure why. Will leave as is for now.
+  */
+  /* transition: 1s ease-in-out; */ 
 }
 
 .add-book-modal.active {
   display: block;
 }
 
+/* Book Form */
+
 .book-form-modal {
   display: flex;
-  gap: var(--small-gap);
+  gap: var(--medium-gap);
   flex-direction: column;
-  width: 100%;
+  width: 300px;
   height: auto;
   padding: var(--xlarge-padding);
   border: 1px solid var(--card-border-color);
   background-color: white;
   border-radius: var(--card-border-rad);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
 }
 
 .title,
@@ -115,6 +146,16 @@ main {
   display: flex;
   flex-direction: column;
 }
+
+.book-form-modal > div > input {
+  height: 28px;
+  padding: var(--input-padding);
+}
+
+
+
+/* Buttons */
+
 
 #addBookBtn {
   display: flex;
@@ -139,7 +180,18 @@ main {
   padding-bottom: var(--medium-padding);
 }
 
-footer {
-  text-align: center;
+.form-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--small-gap);
+}
+
+.form-submit-btn,
+.form-exit-btn {
+  padding: var(--medium-padding);
+  border-radius: var(--button-border-rad);
+  background-color: var(--button-background-color);
+  width: 102px;
 }
 
