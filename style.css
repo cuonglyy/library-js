@@ -147,9 +147,27 @@ footer {
   flex-direction: column;
 }
 
-.book-form-modal > div > input {
+.book-form-modal > div > input,
+.yes-answer > input,
+.no-answer > input {
   height: 28px;
   padding: var(--input-padding);
+}
+
+.status-selection {
+  gap: var(--big-gap);
+}
+
+.status-selection,
+.yes-answer,
+.no-answer {
+  display: flex;
+  align-items: center;
+}
+
+.yes-answer,
+.no-answer {
+  gap: 4px;
 }
 
 .error {
@@ -162,6 +180,7 @@ footer {
   color: red;
   height: 12px;
 }
+
 
 
 /* Buttons */

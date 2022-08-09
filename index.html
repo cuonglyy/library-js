@@ -44,10 +44,16 @@
       </div>
       <div class="readStatus">
         <p>Have you read this book?</p>
-        <input type="radio" name="book_readStatus" id="read" value="true" required>
-        <label for="read">Yes</label>
-        <input type="radio" name="book_readStatus" id="notRead" value="false">
-        <label for="notRead">No</label>
+        <div class="status-selection">
+          <div class="yes-answer">
+            <input type="radio" name="book_readStatus" id="read" value="true" required>
+            <label for="read">Yes</label>
+          </div>
+          <div class="no-answer">
+            <input type="radio" name="book_readStatus" id="notRead" value="false">
+            <label for="notRead">No</label>
+          </div>
+        </div>
       </div>
       <div class="form-btns">
         <button type="button" class="form-submit-btn">Submit</button>

@@ -41,7 +41,7 @@ const submitFormBtn = document.querySelector('.form-submit-btn');
 const bookTitle = document.querySelector('#title');
 const bookAuthor = document.querySelector('#author');
 const bookPages = document.querySelector('#pages');
-const bookReadStatus = document.querySelector('input[name=book_readStatus]');
+const bookReadStatus = document.querySelector('input[name="book_readStatus"]');
 const titleContainer = document.querySelector('.title');
 const authorContainer = document.querySelector('.author');
 const pagesContainer = document.querySelector('.pages');
@@ -57,8 +57,11 @@ const openAddBookModal = () => {
  }
 
 const closeAddBookModal = () => {
+  bookForm.reset();
+
   addBookModal.classList.remove('active');
   overlay.classList.remove('active');
+  removeErrors();
 }
 
 const createNewBook = () => {
@@ -71,27 +74,50 @@ const createNewBook = () => {
   const title = bookTitle.value;
   const author = bookAuthor.value;
   const pages = bookPages.value;
-  const status = bookReadStatus.value;
+  const status = bookReadStatus.checked.value;
 
-  checkInput();
 
   return new Book(title, author, pages, status);
 }
 
 const checkInput = (e) => {
-  e.preventDefault();
 
-  const div = document.createElement('div');
   const errorMsg = document.createElement('p');
+  errorMsg.textContent = "* Please try again";
 
-  div.setAttribute('class', 'error-container');
-  p.textContent = "* Please try again";
-
-  if (bookTitle.value === '') {
-    bookTitle.classList.add('.error');
+  if (bookTitle.value === '' || bookTitle.value.startsWith(' ')) {
+    e.preventDefault();
+    bookTitle.classList.add('error');
     errorMsg.classList.add('input-error');
-    
+    errorMsg.style.display = 'block';
+    titleContainer.appendChild(errorMsg);
   }
+  if (bookAuthor.value === '' || bookAuthor.value.startsWith(' ')) {
+    e.preventDefault();
+    bookAuthor.classList.add('error');
+    errorMsg.classList.add('input-error');
+    errorMsg.style.display = 'block';
+    authorContainer.appendChild(errorMsg);
+  }
+  if (isNaN(bookPages.value) || bookPages.value.startsWith(' ')) {
+    e.preventDefault();
+    bookPages.classList.add('error');
+    errorMsg.classList.add('input-error');
+    errorMsg.style.display = 'block';
+    pagesContainer.appendChild(errorMsg);
+  }
+  if (!bookReadStatus.checked) {
+    e.preventDefault();
+    errorMsg.classList.add('input-error');
+    errorMsg.style.display = 'block';
+    pagesContainer.appendChild(errorMsg);
+  }
+
+}
+
+const removeErrors = () => {
+  errorMsg.classList.remove('input-error');
+  errorMsg.style.display = 'none';
 }
 
 const addBookToGrid = () => {
@@ -110,8 +136,6 @@ const createBookCard = (newBook) => {
   const cardContainer = document.createElement('div');
   cardContainer.setAttribute('id', 'card-container');
 
-
-
 }
 
 const addBookToLibrary = (e) => {
@@ -125,9 +149,10 @@ const addBookToLibrary = (e) => {
   }
 
   library.addBook(newBook);
+  closeAddBookModal();
 }
 
-
+bookForm.addEventListener('submit', checkInput);
 submitFormBtn.addEventListener('click', addBookToLibrary);
 overlay.addEventListener('click', closeAddBookModal);
 closeFormBtn.addEventListener('click', closeAddBookModal);
