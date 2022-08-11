@@ -1,5 +1,5 @@
 class Book {
-  constructor(title = '', author = '', pages = '0', readStatus = false) {
+  constructor(title = '', author = '', pages = '0', readStatus = undefined) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -42,10 +42,10 @@ const bookTitle = document.querySelector('#title');
 const bookAuthor = document.querySelector('#author');
 const bookPages = document.querySelector('#pages');
 const bookReadStatus = document.querySelector('input[name="book_readStatus"]');
-const titleContainer = document.querySelector('.title');
-const authorContainer = document.querySelector('.author');
-const pagesContainer = document.querySelector('.pages');
-const readStatusContainer = document.querySelector('.readStatus');
+const titleErrorMsg = document.querySelector('.title > .error-msg');
+const authorErrorMsg = document.querySelector('.author > .error-msg');
+const pagesErrorMsg = document.querySelector('.pages > .error-msg');
+const statusErrorMsg = document.querySelector('.readStatus > .error-msg');
 
 
 const openAddBookModal = () => {
@@ -58,10 +58,9 @@ const openAddBookModal = () => {
 
 const closeAddBookModal = () => {
   bookForm.reset();
-
+  removeErrors();
   addBookModal.classList.remove('active');
   overlay.classList.remove('active');
-  removeErrors();
 }
 
 const createNewBook = () => {
@@ -76,50 +75,95 @@ const createNewBook = () => {
   const pages = bookPages.value;
   const status = bookReadStatus.checked.value;
 
+  if (!checkInput(title, author, pages, status)) {
+    return;
+  }
 
   return new Book(title, author, pages, status);
 }
 
-const checkInput = (e) => {
+const checkInput = (title, author, pages, status) => {
 
-  const errorMsg = document.createElement('p');
-  errorMsg.textContent = "* Please try again";
+  let errorStatus = false;
 
-  if (bookTitle.value === '' || bookTitle.value.startsWith(' ')) {
-    e.preventDefault();
-    bookTitle.classList.add('error');
-    errorMsg.classList.add('input-error');
-    errorMsg.style.display = 'block';
-    titleContainer.appendChild(errorMsg);
-  }
-  if (bookAuthor.value === '' || bookAuthor.value.startsWith(' ')) {
-    e.preventDefault();
-    bookAuthor.classList.add('error');
-    errorMsg.classList.add('input-error');
-    errorMsg.style.display = 'block';
-    authorContainer.appendChild(errorMsg);
-  }
-  if (isNaN(bookPages.value) || bookPages.value.startsWith(' ')) {
-    e.preventDefault();
-    bookPages.classList.add('error');
-    errorMsg.classList.add('input-error');
-    errorMsg.style.display = 'block';
-    pagesContainer.appendChild(errorMsg);
-  }
-  if (!bookReadStatus.checked) {
-    e.preventDefault();
-    errorMsg.classList.add('input-error');
-    errorMsg.style.display = 'block';
-    pagesContainer.appendChild(errorMsg);
+  if (title === '' || title.startsWith(' ')) {
+    bookTitle.classList.add('error-border');
+    titleErrorMsg.style.display = 'block';
+    errorStatus = true;
+  } else {
+    bookTitle.classList.remove('error-border');
+    titleErrorMsg.style.display = 'none';
+    errorStatus = false;
   }
 
+  console.log(errorStatus);
+
+  if (author === '' || author.startsWith(' ')) {
+    bookAuthor.classList.add('error-border');
+    authorErrorMsg.style.display = 'block';
+    errorStatus = true;
+  } else {
+    bookAuthor.classList.remove('error-border');
+    authorErrorMsg.style.display = 'none';
+    errorStatus = false;
+  }
+
+  console.log(errorStatus);
+
+  if (pages === '' || pages.includes('.')) {
+    bookPages.classList.add('error-border');
+    pagesErrorMsg.style.display = 'block';
+    errorStatus = true;
+  } else {
+    bookPages.classList.remove('error-border');
+    pagesErrorMsg.style.display = 'none';
+    errorStatus = false;
+  }
+
+  console.log(errorStatus);
+
+  if (status === undefined) {
+    statusErrorMsg.style.display = 'block';
+    errorStatus = true;
+  } else {
+    statusErrorMsg.style.display = 'none';
+    errorStatus = false;
+  }
+
+  console.log(status);
+  console.log(errorStatus);
+  return errorStatus;
+}
+
+const addBookToLibrary = (e) => {
+  // To prevent form submission
+  e.preventDefault();
+
+  const newBook = createNewBook();
+  // No inputs returns undefined
+
+  if (library.bookExists(newBook)) {
+    return 'error, book already exists';
+  }
+
+  library.addBook(newBook);
+  closeAddBookModal();
 }
 
 const removeErrors = () => {
-  errorMsg.classList.remove('input-error');
-  errorMsg.style.display = 'none';
+  bookTitle.classList.remove('error-border');
+  titleErrorMsg.style.display = 'none';
+
+  bookAuthor.classList.remove('error-border');
+  authorErrorMsg.style.display = 'none';
+
+  bookPages.classList.remove('error-border');
+  pagesErrorMsg.style.display = 'none';
+
+  statusErrorMsg.style.display = 'none';
 }
 
+/*
 const addBookToGrid = () => {
   resetGrid();
 
@@ -137,22 +181,9 @@ const createBookCard = (newBook) => {
   cardContainer.setAttribute('id', 'card-container');
 
 }
+*/
 
-const addBookToLibrary = (e) => {
-  // To prevent form submission
-  e.preventDefault();
-
-  const newBook = createNewBook();
-
-  if (library.bookExists(newBook)) {
-    return 'error, book already exists';
-  }
-
-  library.addBook(newBook);
-  closeAddBookModal();
-}
-
-bookForm.addEventListener('submit', checkInput);
+//bookForm.addEventListener('submit', checkInput);
 submitFormBtn.addEventListener('click', addBookToLibrary);
 overlay.addEventListener('click', closeAddBookModal);
 closeFormBtn.addEventListener('click', closeAddBookModal);
