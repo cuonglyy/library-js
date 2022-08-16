@@ -16,6 +16,7 @@
   --xxlarge-margin: 54px;
 
   /* Gap */
+  --xsmall-gap: 8px;
   --small-gap: 16px;
   --medium-gap: 24px;
   --big-gap: 32px;
@@ -148,27 +149,18 @@ footer {
 }
 
 .book-form-modal > div > input,
-.yes-answer > input,
-.no-answer > input {
+.status-selection > input {
   height: 28px;
   padding: var(--input-padding);
 }
 
-.status-selection {
-  gap: var(--big-gap);
-}
 
-.status-selection,
-.yes-answer,
-.no-answer {
+.status-selection {
   display: flex;
   align-items: center;
+  gap: var(--xsmall-gap);
 }
 
-.yes-answer,
-.no-answer {
-  gap: 4px;
-}
 
 .error-border {
   border: 1px solid red;
@@ -228,10 +220,41 @@ footer {
 
 /* Card */
 
-#card-container {
+.card-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 2px solid var(--card-border-color);
+  border-radius: var(--card-border-rad);
 }
 
+#remove-card {
+  display: none;
+  background-color: var(--card-border-color);
+  border: 1px solid var(--card-border-color);
+  padding: var(--small-padding);
+  border-radius: 90%;
+  color: white;
+  height: 25px;
+  width: 25px;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  position: relative;
+  top: -50%;
+  right: -50%;
+}
+
+#remove-card:hover {
+  background-color: white;
+  color: var(--card-border-color);
+}
+
+.card-container:hover #remove-card {
+  display: flex;
+}
+
+.card-container:hover {
+  transform: scale(102%);
+}

@@ -1,5 +1,5 @@
 class Book {
-  constructor(title = '', author = '', pages = '0', readStatus = undefined) {
+  constructor(title = '', author = '', pages = '0', readStatus = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -41,7 +41,7 @@ const submitFormBtn = document.querySelector('.form-submit-btn');
 const bookTitle = document.querySelector('#title');
 const bookAuthor = document.querySelector('#author');
 const bookPages = document.querySelector('#pages');
-const bookReadStatus = document.querySelector('input[name="book_readStatus"]');
+const bookReadStatus = document.querySelectorAll('input[name="book_readStatus"]');
 const titleErrorMsg = document.querySelector('.title > .error-msg');
 const authorErrorMsg = document.querySelector('.author > .error-msg');
 const pagesErrorMsg = document.querySelector('.pages > .error-msg');
@@ -58,7 +58,7 @@ const openAddBookModal = () => {
 
 const closeAddBookModal = () => {
   bookForm.reset();
-  removeErrors();
+  //removeErrors();
   addBookModal.classList.remove('active');
   overlay.classList.remove('active');
 }
@@ -73,14 +73,20 @@ const createNewBook = () => {
   const title = bookTitle.value;
   const author = bookAuthor.value;
   const pages = bookPages.value;
-  const status = bookReadStatus.checked.value;
+  const status = Array.from(bookReadStatus).find(button => button.checked).value;
 
-  if (!checkInput(title, author, pages, status)) {
+  /*
+  if (checkInput(title, author, pages, status)) {
     return;
   }
+  */
 
   return new Book(title, author, pages, status);
 }
+
+/*
+
+  * Can worry about finishing input checking later *
 
 const checkInput = (title, author, pages, status) => {
 
@@ -130,17 +136,17 @@ const checkInput = (title, author, pages, status) => {
     errorStatus = false;
   }
 
-  console.log(status);
   console.log(errorStatus);
   return errorStatus;
 }
+
+*/
 
 const addBookToLibrary = (e) => {
   // To prevent form submission
   e.preventDefault();
 
   const newBook = createNewBook();
-  // No inputs returns undefined
 
   if (library.bookExists(newBook)) {
     return 'error, book already exists';
@@ -150,6 +156,7 @@ const addBookToLibrary = (e) => {
   closeAddBookModal();
 }
 
+/*
 const removeErrors = () => {
   bookTitle.classList.remove('error-border');
   titleErrorMsg.style.display = 'none';
@@ -163,7 +170,6 @@ const removeErrors = () => {
   statusErrorMsg.style.display = 'none';
 }
 
-/*
 const addBookToGrid = () => {
   resetGrid();
 
@@ -176,12 +182,24 @@ const resetGrid = () => {
   bookGrid.innerHTML = addBookBtn;
 }
 
-const createBookCard = (newBook) => {
-  const cardContainer = document.createElement('div');
-  cardContainer.setAttribute('id', 'card-container');
-
-}
 */
+
+
+const createBookCard = (newBook) => {
+
+  const containerDiv = document.createElement('div');
+  const removeButton = document.createElement('button');
+  const bookInfoDiv = document.createElement('div');
+  const title = document.createElement('p');
+  const author = document.createElement('p');
+  const pages = document.createElement('p');
+  const buttonsDiv = document.createElement('div');
+  const readButton = document.createElement('button');
+  const notReadButton = document.createElement('button');
+
+  
+}
+
 
 //bookForm.addEventListener('submit', checkInput);
 submitFormBtn.addEventListener('click', addBookToLibrary);

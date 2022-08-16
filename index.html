@@ -21,6 +21,9 @@
         <p class="plus-sign">+</p>
         <p>Add Book</p>
       </button>
+      <div class="card-container">
+        <button id="remove-card">x</button>
+      </div>
       <!---- All of the books will inserted here --->
     </div>
   </main>
@@ -48,14 +51,10 @@
       <div class="readStatus">
         <p>Have you read this book?</p>
         <div class="status-selection">
-          <div class="yes-answer">
-            <input type="radio" name="book_readStatus" id="read" value="true" required>
-            <label for="read">Yes</label>
-          </div>
-          <div class="no-answer">
-            <input type="radio" name="book_readStatus" id="notRead" value="false">
-            <label for="notRead">No</label>
-          </div>
+          <input type="radio" name="book_readStatus" id="read" value="true">
+          <label for="read">Yes</label>
+          <input type="radio" name="book_readStatus" id="notRead" value="false">
+          <label for="notRead">No</label>
         </div>
         <p class="error-msg">* Please select an option</p>
       </div>
