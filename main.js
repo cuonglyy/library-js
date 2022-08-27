@@ -42,11 +42,12 @@ const bookTitle = document.querySelector('#title');
 const bookAuthor = document.querySelector('#author');
 const bookPages = document.querySelector('#pages');
 const bookReadStatus = document.querySelectorAll('input[name="book_readStatus"]');
+/*
 const titleErrorMsg = document.querySelector('.title > .error-msg');
 const authorErrorMsg = document.querySelector('.author > .error-msg');
 const pagesErrorMsg = document.querySelector('.pages > .error-msg');
 const statusErrorMsg = document.querySelector('.readStatus > .error-msg');
-
+*/
 
 const openAddBookModal = () => {
   // Reset form to default values
@@ -153,6 +154,7 @@ const addBookToLibrary = (e) => {
   }
 
   library.addBook(newBook);
+  addBookToGrid();
   closeAddBookModal();
 }
 
@@ -169,27 +171,27 @@ const removeErrors = () => {
 
   statusErrorMsg.style.display = 'none';
 }
+*/
 
 const addBookToGrid = () => {
   resetGrid();
 
-  for (let book in library.books) {
+  for (let book of library.books) {
     createBookCard(book);
   }
 }
 
 const resetGrid = () => {
-  bookGrid.innerHTML = addBookBtn;
+  const cards = Array.from(document.querySelectorAll('#bookGrid div'));
+  cards.map(card => card.parentNode.removeChild(card));
 }
 
-*/
 
-
-const createBookCard = (newBook) => {
+const createBookCard = (book) => {
 
   const containerDiv = document.createElement('div');
   const removeButton = document.createElement('button');
-  const bookInfoDiv = document.createElement('div');
+  //const bookInfoDiv = document.createElement('div');
   const title = document.createElement('p');
   const author = document.createElement('p');
   const pages = document.createElement('p');
@@ -197,9 +199,37 @@ const createBookCard = (newBook) => {
   const readButton = document.createElement('button');
   const notReadButton = document.createElement('button');
 
-  
-}
+  removeButton.textContent = 'x';
+  title.textContent = `${book.title}`;
+  author.textContent = `${book.author}`;
+  pages.textContent = `${book.pages} pages`;
+  readButton.textContent = 'Read';
+  notReadButton.textContent = 'Not Read';
 
+  book.readStatus === 'true' ? containerDiv.style.backgroundColor = '#f0fdf4' : containerDiv.style.backgroundColor = '#fef2f2';
+
+  containerDiv.classList.add('card-container');
+  //bookInfoDiv.classList.add('book-info-div');
+  removeButton.classList.add('remove-card');
+  buttonsDiv.classList.add('button-div');
+  readButton.classList.add('read-button');
+  notReadButton.classList.add('notread-button');
+
+  
+  // if (!document.querySelector('.card-container')) { bookGrid.appendChild(containerDiv); }
+  // /* Have to see if this will work */
+  // else { bookGrid.insertBefore(containerDiv, containerDiv); }
+
+  bookGrid.appendChild(containerDiv);
+  //containerDiv.appendChild(bookInfoDiv);
+  containerDiv.appendChild(title);
+  containerDiv.appendChild(author);
+  containerDiv.appendChild(pages);
+  containerDiv.appendChild(removeButton);
+  containerDiv.appendChild(buttonsDiv);
+  buttonsDiv.appendChild(readButton);
+  buttonsDiv.appendChild(notReadButton);
+}
 
 //bookForm.addEventListener('submit', checkInput);
 submitFormBtn.addEventListener('click', addBookToLibrary);
