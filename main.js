@@ -191,7 +191,6 @@ const createBookCard = (book) => {
 
   const containerDiv = document.createElement('div');
   const removeButton = document.createElement('button');
-  //const bookInfoDiv = document.createElement('div');
   const title = document.createElement('p');
   const author = document.createElement('p');
   const pages = document.createElement('p');
@@ -206,22 +205,21 @@ const createBookCard = (book) => {
   readButton.textContent = 'Read';
   notReadButton.textContent = 'Not Read';
 
-  book.readStatus === 'true' ? containerDiv.style.backgroundColor = '#f0fdf4' : containerDiv.style.backgroundColor = '#fef2f2';
+  book.readStatus === 'true' 
+  ? containerDiv.style.backgroundColor = '#f0fdf4' 
+  : containerDiv.style.backgroundColor = '#fef2f2'
 
   containerDiv.classList.add('card-container');
-  //bookInfoDiv.classList.add('book-info-div');
   removeButton.classList.add('remove-card');
   buttonsDiv.classList.add('button-div');
   readButton.classList.add('read-button');
   notReadButton.classList.add('notread-button');
 
   
-  // if (!document.querySelector('.card-container')) { bookGrid.appendChild(containerDiv); }
-  // /* Have to see if this will work */
-  // else { bookGrid.insertBefore(containerDiv, containerDiv); }
+  if (!document.querySelector('.card-container')) { bookGrid.appendChild(containerDiv); }
+  else { bookGrid.insertBefore(containerDiv, addBookBtn.nextSibling); }
 
-  bookGrid.appendChild(containerDiv);
-  //containerDiv.appendChild(bookInfoDiv);
+
   containerDiv.appendChild(title);
   containerDiv.appendChild(author);
   containerDiv.appendChild(pages);
