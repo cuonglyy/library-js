@@ -24,7 +24,7 @@ class Library {
   }
 
   removeBook(title) {
-    return this.books.filter( book => book.title !== title);
+    this.books = this.books.filter( book => book.title !== title);
   }
 }
 
@@ -42,6 +42,8 @@ const bookTitle = document.querySelector('#title');
 const bookAuthor = document.querySelector('#author');
 const bookPages = document.querySelector('#pages');
 const bookReadStatus = document.querySelectorAll('input[name="book_readStatus"]');
+const removeButton = document.querySelector('.remove-card');
+
 /*
 const titleErrorMsg = document.querySelector('.title > .error-msg');
 const authorErrorMsg = document.querySelector('.author > .error-msg');
@@ -59,7 +61,6 @@ const openAddBookModal = () => {
 
 const closeAddBookModal = () => {
   bookForm.reset();
-  //removeErrors();
   addBookModal.classList.remove('active');
   overlay.classList.remove('active');
 }
@@ -83,6 +84,12 @@ const createNewBook = () => {
   */
 
   return new Book(title, author, pages, status);
+}
+
+const deleteBook = (e) => {
+  const title = e.target.parentNode.firstChild.textContent;
+  library.removeBook(title)
+  updateBookGrid();
 }
 
 /*
@@ -154,26 +161,11 @@ const addBookToLibrary = (e) => {
   }
 
   library.addBook(newBook);
-  addBookToGrid();
+  updateBookGrid();
   closeAddBookModal();
 }
 
-/*
-const removeErrors = () => {
-  bookTitle.classList.remove('error-border');
-  titleErrorMsg.style.display = 'none';
-
-  bookAuthor.classList.remove('error-border');
-  authorErrorMsg.style.display = 'none';
-
-  bookPages.classList.remove('error-border');
-  pagesErrorMsg.style.display = 'none';
-
-  statusErrorMsg.style.display = 'none';
-}
-*/
-
-const addBookToGrid = () => {
+const updateBookGrid = () => {
   resetGrid();
 
   for (let book of library.books) {
@@ -182,6 +174,7 @@ const addBookToGrid = () => {
 }
 
 const resetGrid = () => {
+  /* Removing all book cards from the grid except for add book */
   const cards = Array.from(document.querySelectorAll('#bookGrid div'));
   cards.map(card => card.parentNode.removeChild(card));
 }
@@ -194,7 +187,7 @@ const createBookCard = (book) => {
   const title = document.createElement('p');
   const author = document.createElement('p');
   const pages = document.createElement('p');
-  const buttonsDiv = document.createElement('div');
+  //const buttonsDiv = document.createElement('div');
   const readButton = document.createElement('button');
   const notReadButton = document.createElement('button');
 
@@ -203,7 +196,7 @@ const createBookCard = (book) => {
   author.textContent = `${book.author}`;
   pages.textContent = `${book.pages} pages`;
   readButton.textContent = 'Read';
-  notReadButton.textContent = 'Not Read';
+  //notReadButton.textContent = 'Not Read';
 
   book.readStatus === 'true' 
   ? containerDiv.style.backgroundColor = '#f0fdf4' 
@@ -211,22 +204,23 @@ const createBookCard = (book) => {
 
   containerDiv.classList.add('card-container');
   removeButton.classList.add('remove-card');
-  buttonsDiv.classList.add('button-div');
+  //buttonsDiv.classList.add('button-div');
   readButton.classList.add('read-button');
-  notReadButton.classList.add('notread-button');
-
+  //notReadButton.classList.add('notread-button');
   
   if (!document.querySelector('.card-container')) { bookGrid.appendChild(containerDiv); }
   else { bookGrid.insertBefore(containerDiv, addBookBtn.nextSibling); }
-
 
   containerDiv.appendChild(title);
   containerDiv.appendChild(author);
   containerDiv.appendChild(pages);
   containerDiv.appendChild(removeButton);
-  containerDiv.appendChild(buttonsDiv);
-  buttonsDiv.appendChild(readButton);
-  buttonsDiv.appendChild(notReadButton);
+  //containerDiv.appendChild(buttonsDiv);
+  containerDiv.appendChild(readButton);
+  //buttonsDiv.appendChild(notReadButton);
+
+
+  removeButton.addEventListener('click', deleteBook);
 }
 
 //bookForm.addEventListener('submit', checkInput);
