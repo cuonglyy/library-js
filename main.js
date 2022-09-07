@@ -26,6 +26,10 @@ class Library {
   removeBook(title) {
     this.books = this.books.filter( book => book.title !== title);
   }
+
+  getBook(title) {
+    return this.books.find( book => book.title === title);
+  }
 }
 
 const library = new Library();
@@ -76,6 +80,7 @@ const createNewBook = () => {
   const author = bookAuthor.value;
   const pages = bookPages.value;
   const status = Array.from(bookReadStatus).find(button => button.checked).value;
+  const booleanStatus = (status === 'true'); // Converts string to boolean type
 
   /*
   if (checkInput(title, author, pages, status)) {
@@ -83,7 +88,7 @@ const createNewBook = () => {
   }
   */
 
-  return new Book(title, author, pages, status);
+  return new Book(title, author, pages, booleanStatus);
 }
 
 const deleteBook = (e) => {
@@ -179,6 +184,13 @@ const resetGrid = () => {
   cards.map(card => card.parentNode.removeChild(card));
 }
 
+const toggleRead = (e) => {
+  const title = e.target.parentNode.firstChild.textContent;
+  const book = library.getBook(title);
+
+  book.readStatus = !book.readStatus;
+  updateBookGrid();
+}
 
 const createBookCard = (book) => {
 
@@ -187,26 +199,28 @@ const createBookCard = (book) => {
   const title = document.createElement('p');
   const author = document.createElement('p');
   const pages = document.createElement('p');
-  //const buttonsDiv = document.createElement('div');
   const readButton = document.createElement('button');
-  const notReadButton = document.createElement('button');
 
   removeButton.textContent = 'x';
   title.textContent = `${book.title}`;
   author.textContent = `${book.author}`;
   pages.textContent = `${book.pages} pages`;
   readButton.textContent = 'Read';
-  //notReadButton.textContent = 'Not Read';
-
-  book.readStatus === 'true' 
-  ? containerDiv.style.backgroundColor = '#f0fdf4' 
-  : containerDiv.style.backgroundColor = '#fef2f2'
 
   containerDiv.classList.add('card-container');
   removeButton.classList.add('remove-card');
-  //buttonsDiv.classList.add('button-div');
-  readButton.classList.add('read-button');
-  //notReadButton.classList.add('notread-button');
+
+  console.log(book.readStatus);
+
+  if (book.readStatus) {
+    readButton.textContent = 'Read';
+    containerDiv.classList.add('card-read');
+    readButton.classList.add('read-button');
+  } else {
+    readButton.textContent = 'Not Read';
+    containerDiv.classList.add('card-notread');
+    readButton.classList.add('notread-button');
+  }
   
   if (!document.querySelector('.card-container')) { bookGrid.appendChild(containerDiv); }
   else { bookGrid.insertBefore(containerDiv, addBookBtn.nextSibling); }
@@ -215,11 +229,10 @@ const createBookCard = (book) => {
   containerDiv.appendChild(author);
   containerDiv.appendChild(pages);
   containerDiv.appendChild(removeButton);
-  //containerDiv.appendChild(buttonsDiv);
   containerDiv.appendChild(readButton);
-  //buttonsDiv.appendChild(notReadButton);
 
 
+  readButton.addEventListener('click', toggleRead);
   removeButton.addEventListener('click', deleteBook);
 }
 
